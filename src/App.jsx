@@ -167,7 +167,7 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-base-100 text-base-content">
+      <div className="flex flex-col min-h-screen bg-base-100 text-base-content">
         <nav className="navbar bg-base-100">
           <a className="btn btn-ghost text-xl">CGPA CALCULATOR</a>
           <div className="flex-1 justify-end">
@@ -213,108 +213,110 @@ function App() {
           </div>
         </nav>
 
-        <Routes>
-          <Route path="/" element={
-            <div className="container mx-auto max-w-3xl p-8">
-              <div className="flex flex-col input-section mb-4 justify-center">
-                <h2 className="text-xl font-bold mb-2">Previous Semesters</h2>
-                {previousSemesters.map((semester, index) => (
-                  <div key={index} className="mb-4 p-4 border rounded-xl">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="font-bold">Semester {index + 1}</h3>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={
+              <div className="container mx-auto max-w-3xl p-8">
+                <div className="flex flex-col input-section mb-4 justify-center">
+                  <h2 className="text-xl font-bold mb-2">Previous Semesters</h2>
+                  {previousSemesters.map((semester, index) => (
+                    <div key={index} className="mb-4 p-4 border rounded-xl">
+                      <div className="flex justify-between items-center mb-2">
+                        <h3 className="font-bold">Semester {index + 1}</h3>
+                        {index > 0 && (
+                          <button className="btn btn-circle btn-sm" onClick={() => removeSemester(index)}>X</button>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="flex items-center">
+                          <label className="mr-2" htmlFor={`cgpa-${index}`}>CGPA:</label>
+                          <input
+                            className="input input-bordered flex-grow"
+                            type="text"
+                            id={`cgpa-${index}`}
+                            value={semester.cgpa}
+                            onChange={(e) => handleSemesterChange(index, 'cgpa', e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <button className="btn btn-primary" onClick={addSemester}>Add Semester</button>
+                </div>
+                <div id="course-section" className="flex flex-col justify-center mb-10">
+                  <h2 className="text-xl font-bold mb-2">Current Semester Courses</h2>
+                  {courses.map((course, index) => (
+                    <div className="input-section p-3 border rounded-xl mb-4" key={index}>
+                      <label className="block mb-2 font-bold" htmlFor={`course-name-${index}`}>Course Name {index + 1}:</label>
+                      <input
+                        className="input input-bordered w-full mb-2"
+                        type="text"
+                        id={`course-name-${index}`}
+                        placeholder="Enter course name"
+                        value={course.name}
+                        onChange={(e) => handleCourseChange(index, 'name', e.target.value)}
+                      />
+                      <div className="flex space-x-4 mb-2">
+                        <div className="flex-1">
+                          <label htmlFor={`expected-grade-${index}`} className="block mb-2">Expected Grade:</label>
+                          <select
+                            className="select select-bordered w-full"
+                            id={`expected-grade-${index}`}
+                            value={course.grade}
+                            onChange={(e) => handleCourseChange(index, 'grade', e.target.value)}
+                          >
+                            {gradeOptions.map((option, i) => (
+                              <option value={option} key={i}>{option}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="flex-1">
+                          <label htmlFor={`credit-hours-${index}`} className="block mb-2">Credit Hours:</label>
+                          <input
+                            className="input input-bordered w-full"
+                            type="text"
+                            id={`credit-hours-${index}`}
+                            placeholder="Enter value"
+                            value={course.creditHours}
+                            onChange={(e) => handleCourseChange(index, 'creditHours', e.target.value)}
+                          />
+                        </div>
+                      </div>
                       {index > 0 && (
-                        <button className="btn btn-circle btn-sm" onClick={() => removeSemester(index)}>X</button>
+                        <div className="flex justify-end">
+                          <button className="btn btn-error mt-2" onClick={() => removeCourse(index)}>Remove Course</button>
+                        </div>
                       )}
                     </div>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="flex items-center">
-                        <label className="mr-2" htmlFor={`cgpa-${index}`}>CGPA:</label>
-                        <input
-                          className="input input-bordered flex-grow"
-                          type="text"
-                          id={`cgpa-${index}`}
-                          value={semester.cgpa}
-                          onChange={(e) => handleSemesterChange(index, 'cgpa', e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                <button className="btn btn-primary" onClick={addSemester}>Add Semester</button>
-              </div>
-              <div id="course-section" className="flex flex-col justify-center mb-10">
-                <h2 className="text-xl font-bold mb-2">Current Semester Courses</h2>
-                {courses.map((course, index) => (
-                  <div className="input-section p-3 border rounded-xl mb-4" key={index}>
-                    <label className="block mb-2 font-bold" htmlFor={`course-name-${index}`}>Course Name {index + 1}:</label>
-                    <input
-                      className="input input-bordered w-full mb-2"
-                      type="text"
-                      id={`course-name-${index}`}
-                      placeholder="Enter course name"
-                      value={course.name}
-                      onChange={(e) => handleCourseChange(index, 'name', e.target.value)}
-                    />
-                    <div className="flex space-x-4 mb-2">
-                      <div className="flex-1">
-                        <label htmlFor={`expected-grade-${index}`} className="block mb-2">Expected Grade:</label>
-                        <select
-                          className="select select-bordered w-full"
-                          id={`expected-grade-${index}`}
-                          value={course.grade}
-                          onChange={(e) => handleCourseChange(index, 'grade', e.target.value)}
-                        >
-                          {gradeOptions.map((option, i) => (
-                            <option value={option} key={i}>{option}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="flex-1">
-                        <label htmlFor={`credit-hours-${index}`} className="block mb-2">Credit Hours:</label>
-                        <input
-                          className="input input-bordered w-full"
-                          type="text"
-                          id={`credit-hours-${index}`}
-                          placeholder="Enter value"
-                          value={course.creditHours}
-                          onChange={(e) => handleCourseChange(index, 'creditHours', e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    {index > 0 && (
-                      <div className="flex justify-end">
-                        <button className="btn btn-error mt-2" onClick={() => removeCourse(index)}>Remove Course</button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-                <button className="btn btn-primary" onClick={addCourse}>Add Course</button>
-              </div>
-              <div className="flex justify-center items-center">
-                <button id="calculate-btn" className="btn btn-primary" onClick={calculateCGPA}>Calculate</button>
-              </div>
-              {result.cgpa && (
-                <div id="result" className="mt-8">
-                  <div className="flex justify-center items-center">
-                    <div className="stats stats-vertical lg:stats-horizontal shadow bg-base-100 rounded-lg m-4">
-                      <div className="stat">
-                        <div className="stat-title">GPA</div>
-                        <div className="stat-value">{result.semesterGPA}</div>
-                      </div>
-                      <div className="stat">
-                        <div className="stat-title">CGPA</div>
-                        <div className="stat-value">{result.cgpa}</div>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
+                  <button className="btn btn-primary" onClick={addCourse}>Add Course</button>
                 </div>
-              )}
-            </div>
-          } />
-          <Route path="/history" element={<History history={history} />} />
-        </Routes>
+                <div className="flex justify-center items-center">
+                  <button id="calculate-btn" className="btn btn-primary" onClick={calculateCGPA}>Calculate</button>
+                </div>
+                {result.cgpa && (
+                  <div id="result" className="mt-8">
+                    <div className="flex justify-center items-center">
+                      <div className="stats stats-vertical lg:stats-horizontal shadow bg-base-100 rounded-lg m-4">
+                        <div className="stat">
+                          <div className="stat-title">GPA</div>
+                          <div className="stat-value">{result.semesterGPA}</div>
+                        </div>
+                        <div className="stat">
+                          <div className="stat-title">CGPA</div>
+                          <div className="stat-value">{result.cgpa}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            } />
+            <Route path="/history" element={<History history={history} />} />
+          </Routes>
+        </main>
 
-        <footer className="bg-base-200 text-base-content p-4 mt-8">
+        <footer className="bg-base-200 text-base-content p-4 mt-auto">
           <div className="w-full max-w-screen-xl mx-auto text-center">
             <span className="block text-sm">© 2024 <a href="https://latiffdanieyal.site/" className="hover:underline">Latiff Danieyal</a>. All Rights Reserved.</span>
           </div>

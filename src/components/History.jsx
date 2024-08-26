@@ -2,7 +2,7 @@ import React from 'react';
 
 function History({ history }) {
   return (
-    <div className="container mx-auto min-h-dvh max-w-3xl p-8">
+    <div className="container mx-auto max-w-3xl p-8">
       <h2 className="text-2xl font-bold mb-4">Calculation History</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
