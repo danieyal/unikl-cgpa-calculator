@@ -9,13 +9,13 @@ const getGradePoint = (grade) => {
     switch (grade) {
       case 'A+': return 4.0;
       case 'A': return 4.0;
-      case 'A-': return 3.7;
-      case 'B+': return 3.3;
+      case 'A-': return 3.67;
+      case 'B+': return 3.33;
       case 'B': return 3.0;
-      case 'B-': return 2.7;
-      case 'C+': return 2.3;
+      case 'B-': return 2.67;
+      case 'C+': return 2.33;
       case 'C': return 2.0;
-      case 'C-': return 1.7;
+      case 'C-': return 1.67;
       case 'D': return 1.0;
       case 'F': return 0.0;
       default: return 0.0;
@@ -80,7 +80,7 @@ function Calculator({ history, setHistory }) {
 
       const newResult = {
         semesterGPA: currentSemesterGPA.toFixed(2),
-        cgpa: overallCGPA.toFixed(2),
+        cgpa: Math.floor(overallCGPA * 100) / 100,
         totalCreditHours: currentSemesterCreditHours,
         cgp: currentSemesterGradePoints.toFixed(2),
         date: new Date().toLocaleString(),
