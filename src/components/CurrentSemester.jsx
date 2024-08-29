@@ -2,7 +2,7 @@ import React from 'react';
 
 const gradeOptions = ["SELECT", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
 
-function CurrentSemester({ courses, setCourses }) {
+function CurrentSemester({ courses, setCourses, gradeOptions }) {
   const handleCourseChange = (index, field, value) => {
     const newCourses = [...courses];
     newCourses[index][field] = value;

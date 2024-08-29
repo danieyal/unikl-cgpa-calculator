@@ -3,6 +3,25 @@ import PreviousSemesters from './PreviousSemesters';
 import CurrentSemester from './CurrentSemester';
 import Results from './Results';
 
+const gradeOptions = ["SELECT", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
+
+const getGradePoint = (grade) => {
+    switch (grade) {
+      case 'A+': return 4.0;
+      case 'A': return 4.0;
+      case 'A-': return 3.7;
+      case 'B+': return 3.3;
+      case 'B': return 3.0;
+      case 'B-': return 2.7;
+      case 'C+': return 2.3;
+      case 'C': return 2.0;
+      case 'C-': return 1.7;
+      case 'D': return 1.0;
+      case 'F': return 0.0;
+      default: return 0.0;
+    }
+  };
+  
 function Calculator({ history, setHistory }) {
   const [courses, setCourses] = useState(() => {
     const savedCourses = JSON.parse(localStorage.getItem('courses'));
@@ -88,6 +107,7 @@ function Calculator({ history, setHistory }) {
       <CurrentSemester
         courses={courses}
         setCourses={setCourses}
+        gradeOptions={gradeOptions}
       />
       <div className="flex justify-center mb-6">
         <button className="btn btn-primary w-full sm:w-auto" onClick={calculateCGPA}>Calculate</button>
