@@ -20,12 +20,14 @@ function Navbar({ theme, setTheme }) {
             <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
               <li><Link to="/" className="text-sm sm:text-base">Home</Link></li>
               <li><Link to="/history" className="text-sm sm:text-base">History</Link></li>
+              <li><Link to="/disclaimer" className="text-sm sm:text-base">Disclaimer</Link></li>
             </ul>
           )}
         </div>
         <ul className="menu menu-horizontal px-1 hidden lg:flex">
           <li><Link to="/" className="text-sm sm:text-base">Home</Link></li>
           <li><Link to="/history" className="text-sm sm:text-base">History</Link></li>
+          <li><Link to="/disclaimer" className="text-sm sm:text-base">Disclaimer</Link></li>
         </ul>
         <label className="swap swap-rotate ml-2">
           <input

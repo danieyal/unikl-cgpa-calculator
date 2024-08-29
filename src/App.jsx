@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Calculator from './components/Calculator';
 import History from './components/History';
+import Disclaimer from './components/Disclaimer';
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Calculator history={history} setHistory={setHistory} />} />
             <Route path="/history" element={<History history={history} />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
           </Routes>
         </main>
         <Footer />
